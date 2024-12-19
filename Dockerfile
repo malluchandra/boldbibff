@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 
 # Copy the JAR file into the container
-COPY target/rate-limiter-0.0.1-SNAPSHOT.jar app.jar
+COPY target/boldbibff-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the application's default port
 EXPOSE 8080

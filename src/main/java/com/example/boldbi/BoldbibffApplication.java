@@ -1,4 +1,4 @@
-package com.boldbi.proxy.boldbibff;
+package com.example.boldbi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,1 +1,5 @@
-spring.application.name=boldbibff
+boldbi:
+  api:
+    host: https://k-multi.bolbi-poc.cherryy.ca/boldbi
+    username: sa@sa.com
+    embedSecret: secret

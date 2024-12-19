@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boldbi-proxy-deployment
+  namespace: bi-bv
+  labels:
+    app: boldbi-proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: boldbi-proxy
+  template:
+    metadata:
+      labels:
+        app: boldbi-proxy
+    spec:
+      containers:
+        - name: boldbi-proxy
+          image: mallucharan/boldbi-proxy:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BOLDBI_API_HOST
+              value: "http://bi-api-service:6005/boldbi"
+            - name: BOLDBI_API_USERNAME
+              value: "sa@sa.com" # Replace with your username
+            - name: BOLDBI_API_EMBEDSECRET
+              value: "uY2IcsuFpvtnyeZ2" # Replace with your embed secret
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boldbi-proxy-service
+  namespace: bi-bv
+spec:
+  selector:
+    app: boldbi-proxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
