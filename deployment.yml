@@ -48,3 +48,36 @@ spec:
       port: 80
       targetPort: 8080
   type: ClusterIP
+
+--------------------------
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: boldbi-proxy-ingress
+  namespace: bi-bv
+  labels:
+    app.kubernetes.io/name: boldbi-proxy
+    app.kubernetes.io/managed-by: custom
+  annotations:
+    konghq.com/https-redirect-status-code: '308'
+    konghq.com/protocols: https
+    konghq.com/strip-path: 'true'
+    kubernetes.io/ingress.class: kong
+    kubernetes.io/tls-acme: 'true'
+spec:
+  tls:
+    - hosts:
+        - k-multi.bolbi-poc.cherryy.ca
+      secretName: k-multi-bolbi-poc-cherryy-ca-ingress-secret
+  rules:
+    - host: k-multi.bolbi-poc.cherryy.ca
+      http:
+        paths:
+          - path: /boldbiinternal/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bi-api-service
+                port:
+                  number: 80
